@@ -2,13 +2,14 @@ import {
   createFileRoute,
   Outlet,
   redirect,
+  useNavigate,
   useRouter,
 } from "@tanstack/react-router";
 import type { MenuProps } from "antd";
 import { Dropdown, Space } from "antd";
+import DummyImage from "../../assets/fallback_avatar.png";
 import { useAuth } from "../../providers/auth";
-import Logo from "../../assets/logo.png";
-import DummyImage from "../../assets/dummy.png";
+import { capitalize } from "../../utils/utility";
 
 export const Route = createFileRoute("/_auth")({
   beforeLoad: ({ context, location }) => {
@@ -26,7 +27,7 @@ export const Route = createFileRoute("/_auth")({
 
 function Navbar() {
   const router = useRouter();
-  const navigate = Route.useNavigate();
+  const navigate = useNavigate();
   const auth = useAuth();
 
   const handleLogout = () => {
@@ -50,18 +51,19 @@ function Navbar() {
   ];
 
   return (
-    <div className=" h-full w-full">
-      <div className="items-center flex justify-between bg-white shadow-md py-4 px-5">
-        <img className="h-12 w-12" src={Logo} alt="" />
+    <div className="h-full w-full">
+      <div className="items-center flex justify-end bg-white py-3 px-5">
         <Dropdown menu={{ items }} trigger={["click"]}>
           <a onClick={(e) => e.preventDefault()}>
             <Space>
               <img
-                className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                className="w-10 h-10 p-1 rounded-full ring-2 ring-primaryHover "
                 src={DummyImage}
-                alt="Bordered avatar"
+                alt="profile image"
               />
-              <h1 className="capitalize">{auth?.user?.username}</h1>
+              <h1 className="capitalize">
+                {capitalize(auth?.user?.username!)}
+              </h1>
             </Space>
           </a>
         </Dropdown>
