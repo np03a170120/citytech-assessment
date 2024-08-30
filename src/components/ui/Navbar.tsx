@@ -52,7 +52,7 @@ function Navbar() {
 
   return (
     <div className="h-full w-full">
-      <div className="items-center flex justify-end bg-white py-3 px-5">
+      <div className="items-center flex justify-end bg-white py-3 px-5 shadow-lg lg:shadow-none fixed z-20 w-full lg:relative lg:w-auto lg:px-5 ">
         <Dropdown menu={{ items }} trigger={["click"]}>
           <a onClick={(e) => e.preventDefault()}>
             <Space>
