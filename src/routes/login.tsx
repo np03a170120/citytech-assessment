@@ -32,9 +32,14 @@ function LoginComponent() {
         router.invalidate();
         location.reload();
       },
-      onError(err) {
-        const errorMessage = err.message;
-        // simplify reponse
+      onError(err: Error) {
+        // simplify response
+        let errorMessage = "";
+        if (err?.status === 403) {
+          errorMessage = "Invalid credential. Please log in again.";
+        } else {
+          errorMessage = "Unexpected error occured. Please try again later";
+        }
         message.error(errorMessage);
       },
     });
