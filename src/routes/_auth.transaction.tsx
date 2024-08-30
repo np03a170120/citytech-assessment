@@ -5,29 +5,19 @@ import { useEffect, useState } from "react";
 
 import {
   CheckCircleFilled,
-  CloseCircleFilled,
   ExclamationCircleFilled,
   InfoCircleFilled,
   MinusCircleFilled,
   MoreOutlined,
+  PauseCircleFilled,
 } from "@ant-design/icons";
 import { useTransctionList } from "../api/transactions";
+import { TransactionDataType } from "../types/transactionDataType.schema";
 import { capitalize } from "../utils/utility";
 
 export const Route = createFileRoute("/_auth/transaction")({
   component: () => TransactionLayout(),
 });
-
-interface TransactionDataType {
-  id: string;
-  "Sender Full Name": string;
-  "Receiver Full Name": string;
-  "Current Status": string;
-  "Send Amount": string;
-  "Send Country": string;
-  "Receive Amount": string;
-  "Receive Country": string;
-}
 
 function TransactionLayout() {
   const {
@@ -63,10 +53,10 @@ function TransactionLayout() {
       title: "Sender",
       dataIndex: "Sender Full Name",
       key: "sender_full_name",
-      render: (_, row) => {
+      render: (_, record) => {
         return (
           <div className="capitalize">
-            {capitalize(row["Sender Full Name"])}
+            {capitalize(record["Sender Full Name"])}
           </div>
         );
       },
@@ -75,9 +65,9 @@ function TransactionLayout() {
       title: "From Country",
       dataIndex: "Send Country",
       key: "send_country",
-      render: (_, row) => {
+      render: (_, record) => {
         return (
-          <div className="capitalize">{capitalize(row["Send Country"])}</div>
+          <div className="capitalize">{capitalize(record["Send Country"])}</div>
         );
       },
     },
@@ -90,10 +80,10 @@ function TransactionLayout() {
       title: "Receiver",
       dataIndex: "Receiver Full Name",
       key: "receiver_full_name",
-      render: (_, row) => {
+      render: (_, record) => {
         return (
           <div className="capitalize">
-            {capitalize(row["Receiver Full Name"])}
+            {capitalize(record["Receiver Full Name"])}
           </div>
         );
       },
@@ -102,9 +92,11 @@ function TransactionLayout() {
       title: "To Country",
       dataIndex: "Receive Country",
       key: "receive_country",
-      render: (_, row) => {
+      render: (_, record) => {
         return (
-          <div className="capitalize">{capitalize(row["Receive Country"])}</div>
+          <div className="capitalize">
+            {capitalize(record["Receive Country"])}
+          </div>
         );
       },
     },
@@ -121,19 +113,39 @@ function TransactionLayout() {
         let icon;
         switch (row?.["Current Status"]) {
           case "Authorized":
-            icon = <CheckCircleFilled className="text-green-400" />;
+            icon = (
+              <CheckCircleFilled
+                style={{ fontSize: "16px" }}
+                className="text-green-400"
+              />
+            );
             break;
           case "Processing":
-            icon = <InfoCircleFilled className="text-yellow-400" />;
+            icon = (
+              <InfoCircleFilled
+                style={{ fontSize: "16px" }}
+                className="text-orange-400"
+              />
+            );
             break;
           case "Hold":
-            icon = <CloseCircleFilled className="text-red-400" />;
+            icon = (
+              <PauseCircleFilled
+                style={{ fontSize: "16px" }}
+                className="text-yellow-400"
+              />
+            );
             break;
           case "None":
-            icon = <MinusCircleFilled className="text-gray-400" />;
+            icon = (
+              <MinusCircleFilled
+                style={{ fontSize: "16px" }}
+                className="text-red-400"
+              />
+            );
             break;
           default:
-            icon = <ExclamationCircleFilled />;
+            icon = <ExclamationCircleFilled style={{ fontSize: "16px" }} />;
         }
 
         return (
@@ -149,9 +161,7 @@ function TransactionLayout() {
       key: "action",
       render: (_, record) => {
         const status = record?.["Current Status"];
-
         let items: MenuProps["items"] = [];
-
         if (status === "Processing") {
           items = [
             {
@@ -184,7 +194,6 @@ function TransactionLayout() {
         } else if (status === "None") {
           items = [];
         }
-
         return (
           <Dropdown menu={{ items }} trigger={["click"]}>
             <a onClick={(e) => e.preventDefault()}>
@@ -210,8 +219,8 @@ function TransactionLayout() {
 
   return (
     <>
-      <div className="px-5">
-        <h1 className="my-5">Transaction List</h1>
+      <div className="mx-4 bg-white px-5 my-5 pt-3">
+        <p className="my-3 text-md font-semibold">Transaction List</p>
         <Input
           onChange={(e) => setSearch(e.target.value)}
           className="mb-3"
@@ -222,9 +231,11 @@ function TransactionLayout() {
           columns={columns}
           dataSource={filteredData}
           rowKey="id"
+          scroll={{ x: 100 }}
           pagination={{
-            pageSize: 7,
+            pageSize: 6,
           }}
+          style={{ overflowX: "auto" }}
         />
       </div>
     </>

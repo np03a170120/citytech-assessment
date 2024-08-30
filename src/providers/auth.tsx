@@ -10,7 +10,6 @@ import { getStoredUser, setStoredUser } from "../utils/localstorage";
 
 export interface AuthContext {
   isAuthenticated: boolean;
-  // login: (token: string, username: string) => Promise<void>;
   logout: () => Promise<void>;
   user: { token: string; username: string } | null;
 }
@@ -45,7 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error(" useAuth is not within an AuthProvider");
   }
   return context;
 }

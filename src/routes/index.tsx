@@ -1,26 +1,31 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Button } from "antd";
+import Logo from "./../assets/full_logo.png";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
 });
 
 function HomeComponent() {
-  return (
-    <div className="p-2 grid gap-2">
-      <h1 className="text-xl">Welcome to citytech Assessment!</h1>
+  const navigate = useNavigate();
 
-      <ol className="list-disc list-inside px-2">
-        <li>
-          <Link to="/login" className="text-blue-500 hover:opacity-75">
-            Go to the public login page.
-          </Link>
-        </li>
-        <li>
-          <Link to="/dashboard" className="text-blue-500 hover:opacity-75">
-            Go to the auth-only dashboard page.
-          </Link>
-        </li>
-      </ol>
-    </div>
+  return (
+    <>
+      <div className="gap-2 h-[100vh] w-[100vw] justify-center bg-white flex flex-col items-center">
+        <img className="h-[60px]" src={Logo} alt="" />
+        <h1 className="text-xl font-semibold text-primaryHover mb-3">
+          Assessment (Frontend Developer)
+        </h1>
+        <Button
+          size="large"
+          type="primary"
+          onClick={() => {
+            navigate({ to: "/login" });
+          }}
+        >
+          Proceed
+        </Button>
+      </div>
+    </>
   );
 }

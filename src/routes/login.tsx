@@ -1,9 +1,9 @@
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
-import { z } from "zod";
-
 import type { FormProps } from "antd";
 import { App, Button, Form, Input } from "antd";
+import { z } from "zod";
 import { useUserLogin } from "../api/auth";
+import Logo from "../assets/full_logo.png";
 import { ILogin } from "../types/login.schema";
 
 const FALLBACK = "/dashboard";
@@ -34,6 +34,7 @@ function LoginComponent() {
       },
       onError(err) {
         const errorMessage = err.message;
+        // simplify reponse
         message.error(errorMessage);
       },
     });
@@ -42,7 +43,7 @@ function LoginComponent() {
   return (
     <div className="flex items-center justify-center h-[100vh]">
       <Form
-        className="rounded-lg w-full items-center shadow-lg bg-white p-6 pt-12"
+        className="rounded-lg w-full items-center shadow-lg bg-white p-6 pt-8"
         layout="vertical"
         name="basic"
         style={{ maxWidth: 350 }}
@@ -50,7 +51,11 @@ function LoginComponent() {
         onFinish={onFinish}
         autoComplete="off"
       >
-        <h1 className=" text-lg text-primary font-bold mb-6">Login</h1>
+        <img
+          className="h-[40px]  mb-6 text-center w-full  object-contain"
+          src={Logo}
+          alt=""
+        />
         <Form.Item<ILogin>
           label="Email"
           name="login_id"
@@ -86,7 +91,7 @@ function LoginComponent() {
             type="primary"
             htmlType="submit"
           >
-            Login
+            Log In
           </Button>
         </Form.Item>
       </Form>
