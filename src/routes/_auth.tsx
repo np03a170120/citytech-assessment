@@ -1,7 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import Navbar from "../components/ui/Navbar";
 import NavigationMenu from "../components/ui/NavigationMenu";
-import NavigationMenuMobile from "../components/ui/NavigationMenuMobile";
 
 export const Route = createFileRoute("/_auth")({
   beforeLoad: ({ context, location }) => {
@@ -19,7 +18,7 @@ export const Route = createFileRoute("/_auth")({
 
 function AuthLayout() {
   return (
-    <div className="flex flex-1 h-screen overflow-auto md:overflow-hidden">
+    <div className="flex flex-1 h-screen">
       <NavigationMenu />
       <Navbar />
     </div>
