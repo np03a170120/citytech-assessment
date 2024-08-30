@@ -10,6 +10,7 @@ import {
   MinusCircleFilled,
   MoreOutlined,
   PauseCircleFilled,
+  SearchOutlined,
 } from "@ant-design/icons";
 import { useTransctionList } from "../api/transactions";
 import { TransactionDataType } from "../types/transactionDataType.schema";
@@ -225,6 +226,7 @@ function TransactionLayout() {
           onChange={(e) => setSearch(e.target.value)}
           className="mb-3"
           placeholder="Search"
+          prefix={<SearchOutlined className="text-gray-400" />}
         />
         <Table
           loading={isPending}
